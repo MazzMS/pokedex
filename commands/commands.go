@@ -19,5 +19,10 @@ func GetCommands() map[string]cliCommand {
 			description: "Show all possible commands",
 			Callback:    commandHelp,
 		},
+		"map": {
+			name:        "map",
+			description: "Show the first, or next, 20 locations",
+			Callback:    commandMap,
+		},
 	}
 }
