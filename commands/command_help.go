@@ -10,5 +10,6 @@ func commandHelp(cfg *Config) error {
 		fmt.Printf("%s: %s\n", command.name, command.description)
 	}
 	fmt.Println()
+	cfg.prevCommand = "help"
 	return nil
 }

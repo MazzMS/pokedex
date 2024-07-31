@@ -12,8 +12,6 @@ func commandMapb(cfg *Config) error {
 	}
 
 	// if list is 20 means that only first page was shown
-	// TODO: make another field in 'Config' struct to keep track of more lines added
-	// or even keep track of the total lines added and then 'clean' the console based on that
 	if cfg.offset <= 20 {
 		cfg.printedLines += 2
 		return errors.New("You are already at page 0!")

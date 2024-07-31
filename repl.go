@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/mazzms/pokedex/commands"
 )
@@ -33,6 +34,17 @@ func startRepl(cfg *commands.Config) {
 		if command, ok := commands[possibleCommand]; ok {
 			err := command.Callback(cfg)
 			if err != nil {
+				// print the error in default color initially
+				fmt.Println(err)
+				time.Sleep(100 * time.Millisecond)
+
+				// print the error in red for half a second
+				fmt.Print("\033[A\033[2K")
+				fmt.Printf("\033[31m%s\033[0m\n", err)
+				time.Sleep(400 * time.Millisecond)
+
+				//  left the error printed in the initial color 
+				fmt.Print("\033[A\033[2K")
 				fmt.Println(err)
 			}
 		} else {
