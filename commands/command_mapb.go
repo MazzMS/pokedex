@@ -15,11 +15,12 @@ func commandMapb(cfg *Config) error {
 	// TODO: make another field in 'Config' struct to keep track of more lines added
 	// or even keep track of the total lines added and then 'clean' the console based on that
 	if cfg.offset <= 20 {
+		cfg.printedLines += 2
 		return errors.New("You are already at page 0!")
 	}
 
 	// the previous command has to be either map or mapb, so clear it
-	for i := 0; i <= (24 + 1); i++ {
+	for i := 0; i <= cfg.printedLines; i++ {
 		fmt.Print("\033[A\033[2K")
 	}
 
@@ -35,14 +36,19 @@ func commandMapb(cfg *Config) error {
 
 	results := resp.Results
 
+	// set printed lines to 0
+	cfg.printedLines = 0
 	// print areas
 	fmt.Printf("\nThere are %d areas!\n", resp.Count)
 	fmt.Printf("Page: %d. Location areas:\n", cfg.offset/20)
 	fmt.Println()
+	cfg.printedLines += 4
 	for i, result := range results {
 		fmt.Printf(" %04d. %s\n", cfg.offset+i+1, result.Name)
+		cfg.printedLines++
 	}
 	fmt.Println()
+	cfg.printedLines++
 
 	// config for next listing
 	cfg.offset += 20

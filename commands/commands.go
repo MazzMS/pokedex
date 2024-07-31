@@ -9,6 +9,7 @@ type Config struct {
 	PokedexClient pokedex.Client
 	offset        int
 	prevCommand   string
+	printedLines  int
 }
 
 type cliCommand struct {
