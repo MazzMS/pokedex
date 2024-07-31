@@ -9,7 +9,7 @@ import (
 	"github.com/mazzms/pokedex/commands"
 )
 
-func startRepl() {
+func startRepl(cfg *commands.Config) {
 	fmt.Println("Starting the pokedex...")
 	scanner := bufio.NewScanner(os.Stdin)
 	commands := commands.GetCommands()
@@ -31,7 +31,10 @@ func startRepl() {
 		possibleCommand := words[0]
 
 		if command, ok := commands[possibleCommand]; ok {
-			command.Callback()
+			err := command.Callback(cfg)
+			if err != nil {
+				fmt.Println(err)
+			}
 		} else {
 			fmt.Printf("%q is not a valid command, please try again\n", input)
 		}

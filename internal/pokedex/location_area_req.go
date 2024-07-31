@@ -5,11 +5,13 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strconv"
 )
 
-func (c *Client) ListLocationAreas() (LocationAreasResp, error) {
-	endpoint := "location/"
-	fullURL := baseURL + endpoint
+func (c *Client) ListLocationAreas(offset int) (LocationAreasResp, error) {
+	queryParameter := "/?offset=" + strconv.Itoa(offset) + "&limit=20"
+	section := "/location"
+	fullURL := baseURL + section + queryParameter
 
 	req, err := http.NewRequest("GET", fullURL, nil)
 
