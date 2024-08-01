@@ -30,9 +30,10 @@ func startRepl(cfg *commands.Config) {
 		}
 
 		possibleCommand := words[0]
+		args := words[1:]
 
 		if command, ok := commands[possibleCommand]; ok {
-			err := command.Callback(cfg)
+			err := command.Callback(cfg, args...)
 			if err != nil {
 				// print the error in default color initially
 				fmt.Println(err)

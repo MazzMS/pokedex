@@ -5,7 +5,8 @@ import (
 	"fmt"
 )
 
-func commandMapb(cfg *Config) error {
+func commandMapb(cfg *Config, args ...string) error {
+	// TODO: As we already have arguments, would be interesting to be able to jump more than 1 page
 	// if the list was not previously started
 	if cfg.prevCommand != "map" && cfg.offset == 0 {
 		return errors.New("Use 'map' to start listing.")

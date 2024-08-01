@@ -5,7 +5,8 @@ import (
 	"fmt"
 )
 
-func commandMap(cfg *Config) error {
+func commandMap(cfg *Config, args ...string) error {
+	// TODO: As we already have arguments, would be interesting to be able to jump more than 1 page
 	// if previous command was not either 'map' or 'mapb' restart the offset
 	if cfg.prevCommand != "map" && cfg.prevCommand != "mapb" {
 		cfg.offset = 0
