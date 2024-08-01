@@ -1,6 +1,8 @@
 package main
 
 import (
+	"time"
+
 	"github.com/mazzms/pokedex/commands"
 	"github.com/mazzms/pokedex/internal/pokedex"
 )
@@ -8,7 +10,7 @@ import (
 
 func main() {
 	cfg := &commands.Config{
-		PokedexClient: pokedex.NewClient(),
+		PokedexClient: pokedex.NewClient(30 * time.Minute),
 	}
 
 	startRepl(cfg)

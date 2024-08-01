@@ -13,32 +13,33 @@ func (c *Client) ListLocationAreas(offset int) (LocationAreasResp, error) {
 	section := "/location"
 	fullURL := baseURL + section + queryParameter
 
-	req, err := http.NewRequest("GET", fullURL, nil)
+	// check if chached
+	body, ok := c.cache.Get(fullURL)
+	// if not cached
+	if !ok {
+		req, err := http.NewRequest("GET", fullURL, nil)
+		if err != nil {
+			return LocationAreasResp{}, err
+		}
 
-	if err != nil {
-		return LocationAreasResp{}, err
+		resp, err := c.httpClient.Do(req)
+		if err != nil {
+			return LocationAreasResp{}, err
+		}
+		if resp.StatusCode > 399 {
+			return LocationAreasResp{}, fmt.Errorf("Response failed with status code: %d\n", resp.StatusCode)
+		}
+
+		body, err = io.ReadAll(resp.Body)
+		defer resp.Body.Close()
+		if err != nil {
+			return LocationAreasResp{}, err
+		}
+
+		c.cache.Add(fullURL, body)
 	}
-
-	resp, err := c.httpClient.Do(req)
-
-	if err != nil {
-		return LocationAreasResp{}, err
-	}
-
-	if resp.StatusCode > 399 {
-		return LocationAreasResp{}, fmt.Errorf("Response failed with status code: %d\n", resp.StatusCode)
-	}
-
-	body, err := io.ReadAll(resp.Body)
-	defer resp.Body.Close()
-
-	if err != nil {
-		return LocationAreasResp{}, err
-	}
-
 	locationAreas := LocationAreasResp{}
-	err = json.Unmarshal(body, &locationAreas)
-
+	err := json.Unmarshal(body, &locationAreas)
 	if err != nil {
 		return LocationAreasResp{}, err
 	}
