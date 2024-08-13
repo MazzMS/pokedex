@@ -13,7 +13,7 @@ func commandCatch(c *Config, args ...string) error {
 	}
 
 	// if no zone explored
-	if c.possiblePokemons == nil {
+	if c.PossiblePokemons == nil {
 		return errors.New("You have not visited any zone!")
 	}
 
@@ -24,7 +24,7 @@ func commandCatch(c *Config, args ...string) error {
 	}
 
 	// if pokemon is not in list
-	_, ok := c.possiblePokemons[pokemon.Name]
+	_, ok := c.PossiblePokemons[pokemon.Name]
 	if !ok {
 		return fmt.Errorf("%s is not in the area!", pokemon.Name)
 	}
@@ -43,7 +43,7 @@ func commandCatch(c *Config, args ...string) error {
 
 	time.Sleep(200 * time.Millisecond)
 	fmt.Printf("\033[38;2;50;205;50m%s was caught!\033[0m\n", pokemon.Name)
-	c.capturedPokemons[pokemon.Name] = pokemon
+	c.CapturedPokemons[pokemon.Name] = pokemon
 	fmt.Println()
 	return nil
 }

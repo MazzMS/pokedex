@@ -3,6 +3,8 @@ package commands
 import (
 	"errors"
 	"fmt"
+
+	"github.com/mazzms/pokedex/internal/pokedex"
 )
 
 func commandExplore(c *Config, args ...string) error {
@@ -18,7 +20,7 @@ func commandExplore(c *Config, args ...string) error {
 
 	fmt.Printf("You are in \033[38;2;255;87;51m%s\033[0m\n", resp.Name)
 	fmt.Println("You see these pokemons!")
-	clear(c.possiblePokemons)
+	c.PossiblePokemons = make(map[string]pokedex.Pokemon)
 	fmt.Println()
 	for _, pokemon := range resp.PokemonEncounters {
 		pokemon, err := c.PokedexClient.GetPokemon(pokemon.Pokemon.Name) 
@@ -26,7 +28,7 @@ func commandExplore(c *Config, args ...string) error {
 			return err
 		}
 		fmt.Printf(" - %s\n", pokemon.Name)
-		c.possiblePokemons[pokemon.Name] = pokemon
+		c.PossiblePokemons[pokemon.Name] = pokemon
 	}
 	fmt.Println()
 	return nil

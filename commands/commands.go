@@ -10,8 +10,8 @@ type Config struct {
 	offset           int
 	prevCommand      string
 	printedLines     int
-	possiblePokemons map[string]pokedex.Pokemon
-	capturedPokemons map[string]pokedex.Pokemon
+	PossiblePokemons map[string]pokedex.Pokemon
+	CapturedPokemons map[string]pokedex.Pokemon
 }
 
 type cliCommand struct {

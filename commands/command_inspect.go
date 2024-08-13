@@ -10,15 +10,15 @@ import (
 func commandInspect(c *Config, args ...string) error {
 	// no argument, show all the captured pokemons
 	if len(args) == 0 {
-		if len(c.capturedPokemons) == 0 {
+		if len(c.CapturedPokemons) == 0 {
 			return errors.New("You have not captured any pokemon!")
 		}
-		if len(c.capturedPokemons) == 1 {
+		if len(c.CapturedPokemons) == 1 {
 			fmt.Println("You have captured this pokemon!")
 		} else {
 			fmt.Println("You have captured these pokemons!")
 		}
-		for _, pokemon := range c.capturedPokemons {
+		for _, pokemon := range c.CapturedPokemons {
 			fmt.Printf("- %s\n", pokemon.Name)
 		}
 		fmt.Println()
@@ -37,7 +37,7 @@ func commandInspect(c *Config, args ...string) error {
 	}
 
 	// if pokemon is not captured
-	_, ok := c.capturedPokemons[pokemon.Name]
+	_, ok := c.CapturedPokemons[pokemon.Name]
 	if !ok {
 		return fmt.Errorf("%s has not been captured!", pokemon.Name)
 	}
@@ -45,18 +45,13 @@ func commandInspect(c *Config, args ...string) error {
 	// print info
 	fmt.Println()
 	fmt.Printf("inspecting %s!\n", pokemon.Name)
-	fmt.Printf("Height: %d\n", pokemon.Height)
-	fmt.Printf("Weight: %d\n", pokemon.Weight)
-	fmt.Println("Stats:")
-	/*
-	fmt.Println("\t-hp: %s")
-	fmt.Println("\t-attack: %s")
-	fmt.Println("\t-defense: %s")
-	fmt.Println("\t-special-attack: %s")
-	fmt.Println("\t-special-defense: %s")
-	fmt.Println("\t-speed: %s")
-	fmt.Println("Types: ")
-	*/
+	fmt.Printf("height: %d\n", pokemon.Height)
+	fmt.Printf("weight: %d\n", pokemon.Weight)
+	fmt.Println("stats:")
+	for _, stat := range pokemon.Stats {
+		fmt.Printf("\t- %s: %d\n", stat.Stat.Name, stat.BaseStat)
+	}
+	fmt.Println("types: ")
 	for _, t := range pokemon.Types {
 		color, err := pokedex.GetColor(t.Type.Name)
 		if err != nil {
