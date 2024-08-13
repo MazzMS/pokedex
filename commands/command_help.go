@@ -5,13 +5,13 @@ import (
 )
 
 func commandHelp(cfg *Config, args ...string) error {
+	cfg.prevCommand = "help"
 	if len(args) == 0 {
 		fmt.Println()
 		for _, command := range GetCommands() {
 			fmt.Printf("%s: %s\n", command.name, command.description)
 		}
 		fmt.Println()
-		cfg.prevCommand = "help"
 		return nil
 	} else if len(args) == 1 {
 		commands := GetCommands()
@@ -22,7 +22,6 @@ func commandHelp(cfg *Config, args ...string) error {
 		fmt.Println()
 		fmt.Printf("%s: %s\n", command.name, command.description)
 		fmt.Println()
-		cfg.prevCommand = "help"
 		return nil
 	} else {
 		return fmt.Errorf("expected at most 1 argument, found %d", len(args))

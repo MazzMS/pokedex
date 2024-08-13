@@ -8,6 +8,7 @@ import (
 )
 
 func commandInspect(c *Config, args ...string) error {
+	c.prevCommand = "inspect"
 	// else show the info about that pokemon
 	if len(args) != 1 {
 		return errors.New("Not a valid amount of arguments")

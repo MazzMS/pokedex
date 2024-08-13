@@ -8,6 +8,7 @@ import (
 )
 
 func commandExplore(c *Config, args ...string) error {
+	c.prevCommand = "explore"
 	if len(args) != 1 {
 		return errors.New("Not a valid amount of arguments")
 	}

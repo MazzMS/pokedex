@@ -7,6 +7,7 @@ import (
 )
 
 func commandPokedex(c *Config, args ...string) error {
+	c.prevCommand = "pokedex"
 	if len(c.CapturedPokemons) == 0 {
 		return errors.New("You have not captured any pokemon!")
 	}

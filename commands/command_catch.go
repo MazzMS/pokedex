@@ -8,6 +8,7 @@ import (
 )
 
 func commandCatch(c *Config, args ...string) error {
+	c.prevCommand = "catch"
 	if len(args) != 1 {
 		return errors.New("Not a valid amount of arguments")
 	}
