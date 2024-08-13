@@ -5,12 +5,26 @@ import (
 )
 
 func commandHelp(cfg *Config, args ...string) error {
-	// TODO: get the description for an specific command if used with an argument
-	fmt.Println()
-	for _, command := range GetCommands() {
+	if len(args) == 0 {
+		fmt.Println()
+		for _, command := range GetCommands() {
+			fmt.Printf("%s: %s\n", command.name, command.description)
+		}
+		fmt.Println()
+		cfg.prevCommand = "help"
+		return nil
+	} else if len(args) == 1 {
+		commands := GetCommands()
+		command, ok := commands[args[0]]
+		if !ok {
+			return fmt.Errorf("%q is not a command", args[0])
+		}
+		fmt.Println()
 		fmt.Printf("%s: %s\n", command.name, command.description)
+		fmt.Println()
+		cfg.prevCommand = "help"
+		return nil
+	} else {
+		return fmt.Errorf("expected at most 1 argument, found %d", len(args))
 	}
-	fmt.Println()
-	cfg.prevCommand = "help"
-	return nil
 }

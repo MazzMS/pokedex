@@ -17,7 +17,8 @@ func commandExplore(c *Config, args ...string) error {
 	}
 
 	// print areas
-	fmt.Printf("You are in %q!\n", resp.Name)
+	// fmt.Printf("You are in %q!\n", resp.Name)
+	fmt.Printf("You are in \033[38;2;255;87;51m%s\033[0m\n", resp.Name)
 	fmt.Println("You see these pokemons!")
 	fmt.Println()
 	for _, pokemon := range resp.PokemonEncounters {
