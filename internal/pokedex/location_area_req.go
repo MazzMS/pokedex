@@ -98,7 +98,7 @@ func (c *Client) LocationArea(area string) (LocationArea, error) {
 			return LocationArea{}, err
 		}
 		if resp.StatusCode > 399 {
-			return LocationArea{}, fmt.Errorf("Response failed with status code: %d\n", resp.StatusCode)
+			return LocationArea{}, fmt.Errorf("Response failed with status code: %d", resp.StatusCode)
 		}
 
 		body, err = io.ReadAll(resp.Body)

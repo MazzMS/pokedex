@@ -16,13 +16,17 @@ func commandExplore(c *Config, args ...string) error {
 		return err
 	}
 
-	// print areas
-	// fmt.Printf("You are in %q!\n", resp.Name)
 	fmt.Printf("You are in \033[38;2;255;87;51m%s\033[0m\n", resp.Name)
 	fmt.Println("You see these pokemons!")
+	clear(c.possiblePokemons)
 	fmt.Println()
 	for _, pokemon := range resp.PokemonEncounters {
-		fmt.Printf(" - %s\n", pokemon.Pokemon.Name)
+		pokemon, err := c.PokedexClient.GetPokemon(pokemon.Pokemon.Name) 
+		if err != nil {
+			return err
+		}
+		fmt.Printf(" - %s\n", pokemon.Name)
+		c.possiblePokemons[pokemon.Name] = pokemon
 	}
 	fmt.Println()
 	return nil

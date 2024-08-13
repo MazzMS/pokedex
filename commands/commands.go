@@ -6,10 +6,12 @@ import (
 )
 
 type Config struct {
-	PokedexClient pokedex.Client
-	offset        int
-	prevCommand   string
-	printedLines  int
+	PokedexClient    pokedex.Client
+	offset           int
+	prevCommand      string
+	printedLines     int
+	possiblePokemons map[string]pokedex.Pokemon
+	capturedPokemons map[string]pokedex.Pokemon
 }
 
 type cliCommand struct {
@@ -44,6 +46,16 @@ func GetCommands() map[string]cliCommand {
 			name:        "explore {location_name} | {location_id}",
 			description: "Explore the area. You can use the name of an specific area or the numeration provided by the 'map' commands",
 			Callback:    commandExplore,
+		},
+		"catch": {
+			name:        "catch {pokemon_name}",
+			description: "Try to catch a pokemon.",
+			Callback:    commandCatch,
+		},
+		"inspect": {
+			name:        "inspect {pokemon_name}",
+			description: "Info about a pokemon",
+			Callback:    commandInspect,
 		},
 	}
 }
